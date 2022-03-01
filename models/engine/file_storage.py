@@ -6,7 +6,8 @@ into instances.
 
 
 import json
-
+from re import X
+from models.base_model import BaseModel
 
 class FileStorage:
     """ Class that works serializing and deserializing objects 
@@ -28,27 +29,31 @@ class FileStorage:
     __objects = {}
     __file_path = "file.json"
 
-    @property
     def all(self):
         """ """
         return self.__objects
 
-
     def new(self, obj):
         """ """
-        self.__objects.update({type(obj).__name__ + '.' + obj.id:obj})
-    
+        return self.__objects.update({type(obj).__name__ + '.' + obj.id:obj})
+
     def save(self):
         """ """
-        with open(self.__file_path, mode="w") as file:
-            json.dump(self.__objects, file)
-
+        new_dict = {}
+        try:
+            with open(self.__file_path, mode="w") as file:
+                for key, value in self.__objects.items():
+                    new_dict[key] = value.to_dict()
+                json.dump(new_dict, file)
+        except Exception:
+            return
 
     def reload(self):
         """ """
         try:
-            if self.__file_path:
-                with open(self.__file_path, mode="r") as file:
-                    self.__objects = json.load(file)
-        except(FileNotFoundError):
+            with open(self.__file_path, mode="r") as file:
+                attrs = json.load(file)
+            for key, value in attrs.items():
+                self.__objects[key] = BaseModel(**value)
+        except Exception:
             return
