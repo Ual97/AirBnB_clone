@@ -5,7 +5,7 @@ Created class Base Model, attributes and methods.
 
 
 import uuid
-from models import storage
+import models
 from datetime import date, datetime
 
 
@@ -39,7 +39,7 @@ class BaseModel:
                 else:
                     setattr(self, key, kwargs[key])
         else:
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """ String representation of instance"""
@@ -48,10 +48,10 @@ class BaseModel:
     def save(self):
         """ updates public instance attribute updated_at"""
         self.updated_at = datetime.now()
-        storage.save(self)
+        models.storage.save()
     
     def to_dict(self):
-        """ Instance to a dictionary"""
+        """ Instance to dictionary"""
         new_dict = self.__dict__.copy()
         new_dict.update({'created_at':self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f"),
         'updated_at':self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f"), '__class__':'BaseModel'})
