@@ -9,7 +9,7 @@ from datetime import date, datetime
 
 
 class BaseModel:
-    """ Base Model class itself 
+    """ Base Model
 
         Att:
         id: randomly generated id, unique for each instance.
@@ -47,7 +47,7 @@ class BaseModel:
         self.updated_at = datetime.now()
     
     def to_dict(self):
-        """ Instance to a JSON string """
+        """ Instance to a dictionary"""
         new_dict = self.__dict__.copy()
         new_dict.update({'created_at':self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f"),
         'updated_at':self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f"), '__class__':'BaseModel'})
