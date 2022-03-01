@@ -5,6 +5,7 @@ Created class Base Model, attributes and methods.
 
 
 import uuid
+from models import storage
 from datetime import date, datetime
 
 
@@ -37,14 +38,17 @@ class BaseModel:
                     setattr(self, key, datetime.strptime(kwargs[key], "%Y-%m-%dT%H:%M:%S.%f"))
                 else:
                     setattr(self, key, kwargs[key])
+        else:
+            storage.new(self)
 
     def __str__(self):
         """ String representation of instance"""
-        return "[BaseModel] ({}) {}".format(self.id, self.__dict__)
+        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
     
     def save(self):
         """ updates public instance attribute updated_at"""
         self.updated_at = datetime.now()
+        storage.save(self)
     
     def to_dict(self):
         """ Instance to a dictionary"""
