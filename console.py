@@ -2,6 +2,7 @@
 """Program that contains entry point of the command interpreter"""
 
 import cmd
+from logging import exception
 from models import storage
 from models.base_model import BaseModel
 
@@ -9,7 +10,7 @@ from models.base_model import BaseModel
 class HBNBCommand(cmd.Cmd):
     """command interpreter class"""
     prompt = "(hbnb)"
-    classes = {"BaseModel"}
+    classes = ["BaseModel", "User"]
 
     def do_EOF(self, line):
         """handles EOF"""
@@ -37,15 +38,43 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """Prints the string representation of an instance based on the class name and id"""
+        lines = line.split()
+        print(lines)
         if len(line) == 0:
             print("** class name missing **")
         else:
-            lines = line.split()
-            if lines[0] not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-            elif len(lines) > 1:
-                if lines[1] not in storage.all().keys():
-                    print("** instance id missing **")
+            if len(lines) == 1:
+                print(len(lines))
+                isfound = 1
+                for elements in HBNBCommand.classes:
+                    if elements == lines[1]:
+                        isfound = 0
+                        break
+                    else:
+                        continue
+                if isfound == 1:
+                    print("** class doesn't exist **")
+            elif len(lines) == 1:
+                print("** instance id missing **")
+            else:
+                id_list = []
+                aux_list = []
+                for key in storage.all().keys():
+                    aux_list = str(key).split(".")
+                    id_list.append(aux_list[1])
+                    aux_list.clear()
+                for possibleid in id_list:
+                    if lines[1] == possibleid:
+                        isfound = 0
+                        break
+                    else:
+                        isfound = 1
+                        continue
+                if isfound == 1:
+                    print("** no instance found **")                    
+                
+
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
