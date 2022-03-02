@@ -2,7 +2,7 @@
 """ City class that inherits from Base Model"""
 
 
-from base_model import BaseModel
+from .base_model import BaseModel
 
 
 class City(BaseModel):

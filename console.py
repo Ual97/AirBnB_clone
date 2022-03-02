@@ -4,14 +4,13 @@
 import cmd
 from logging import exception
 from models import storage
-from models.base_model import BaseModel
 from models.user import User
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter class"""
@@ -35,6 +34,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates new instance of BaseModel,
         saves it to JSON file and prints id"""
         lines = line.split()
+        isfound = 0
         if len(line) == 0:
             print("** class name missing **")
             return
@@ -43,11 +43,11 @@ class HBNBCommand(cmd.Cmd):
                 isfound = 0
                 break
             else:
-                    continue
+                continue
         if isfound == 1:
-                print("** class doesn't exist **")
+            print("** class doesn't exist **")
         else:
-            new_instance= eval(line)()
+            new_instance = eval(line)()
             new_instance.save()
             print(new_instance.id)
 
