@@ -30,15 +30,15 @@ class FileStorage:
     __file_path = "file.json"
 
     def all(self):
-        """ """
+        """ Returns the objects dictionary """
         return self.__objects
 
     def new(self, obj):
-        """ """
+        """ Updates the objects dictionary with a new object"""
         return self.__objects.update({type(obj).__name__ + '.' + obj.id:obj})
 
     def save(self):
-        """ """
+        """ Saves the dictionary into a json file """
         new_dict = {}
         try:
             with open(self.__file_path, mode="w") as file:
@@ -49,7 +49,7 @@ class FileStorage:
             return
 
     def reload(self):
-        """ """
+        """ Loads an object from json file if it exists, otherwise do nothing """
         try:
             with open(self.__file_path, mode="r") as file:
                 attrs = json.load(file)
