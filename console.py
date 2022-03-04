@@ -18,18 +18,6 @@ class HBNBCommand(cmd.Cmd):
     classes = ["BaseModel", "User", "City", "Amenity",
                "Review", "State", "Place"]
 
-    def do_EOF(self, line):
-        """ End of file command """
-        return True
-
-    def do_quit(self, line):
-        """ Command to quit the CMD interface """
-        return True
-
-    def emptyline(self):
-        """if emptyline, do nothing"""
-        return
-
     def do_create(self, line):
         """Creates new instance of BaseModel,
         saves it to JSON file and prints id"""
@@ -239,6 +227,18 @@ class HBNBCommand(cmd.Cmd):
             dictfun.get(auxlist[1])(auxlist[0])
         except Exception:
             pass
+
+    def do_EOF(self, line):
+        """ End of file command """
+        return True
+
+    def do_quit(self, line):
+        """ Command to quit the CMD interface """
+        return True
+
+    def emptyline(self):
+        """if emptyline, do nothing"""
+        return
 
 
 if __name__ == "__main__":
