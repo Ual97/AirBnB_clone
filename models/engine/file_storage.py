@@ -9,8 +9,9 @@ import json
 from re import X
 from models.base_model import BaseModel
 
+
 class FileStorage:
-    """ Class that works serializing and deserializing objects 
+    """ Class that works serializing and deserializing objects
     from JSON and to JSON.
 
     Att:
@@ -35,7 +36,7 @@ class FileStorage:
 
     def new(self, obj):
         """ Updates the objects dictionary with a new object"""
-        return self.__objects.update({type(obj).__name__ + '.' + obj.id:obj})
+        return self.__objects.update({type(obj).__name__ + '.' + obj.id: obj})
 
     def save(self):
         """ Saves the dictionary into a json file """
@@ -43,17 +44,24 @@ class FileStorage:
         try:
             with open(self.__file_path, mode="w") as file:
                 for key, value in self.__objects.items():
+                    # Saving objects into __obj dict
                     new_dict[key] = value.to_dict()
+                    # "converting" value from obj inst to dict att
                 json.dump(new_dict, file)
+                # Getting all into a new file
         except Exception:
             return
 
     def reload(self):
-        """ Loads an object from json file if it exists, otherwise do nothing """
+        """ Loads an object from json file if it exists,
+            otherwise do nothing
+        """
         try:
             with open(self.__file_path, mode="r") as file:
+                # Opens file containing json repr of instances
                 attrs = json.load(file)
             for key, value in attrs.items():
+                # Instantiates the objects loaded from the JSON
                 self.__objects[key] = BaseModel(**value)
         except Exception:
             return

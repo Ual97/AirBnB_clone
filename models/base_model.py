@@ -20,10 +20,10 @@ class BaseModel:
         Methods:
         __init__: instancing with or without dictionary.
         __str___: a string representation of an instance.
-        save: updates the public instance attribute updated_at with the current datetime
-        to_dict: returns a dictionary containing all keys/values of __dict__ of the instance.
+        save: updates the updated_at attr with the current datetime
+        to_dict: returns a dictionary containing all keys/values of __dict__.
 
-    """ 
+    """
 
     def __init__(self, *args, **kwargs):
         """ Instance constructor that can receive dictionary """
@@ -35,7 +35,8 @@ class BaseModel:
                 if key == '__class__':
                     continue
                 if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.strptime(kwargs[key], "%Y-%m-%dT%H:%M:%S.%f"))
+                    setattr(self, key, datetime.strptime
+                            (kwargs[key], "%Y-%m-%dT%H:%M:%S.%f"))
                 else:
                     setattr(self, key, kwargs[key])
         else:
@@ -43,16 +44,19 @@ class BaseModel:
 
     def __str__(self):
         """ String representation of instance"""
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
-    
+        return "[{}] ({}) {}".format(type(self).__name__,
+                                     self.id, self.__dict__)
+
     def save(self):
         """ updates public instance attribute updated_at"""
         self.updated_at = datetime.now()
         models.storage.save()
-    
+
     def to_dict(self):
         """ Instance to dictionary"""
         new_dict = self.__dict__.copy()
-        new_dict.update({'created_at':self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f"),
-        'updated_at':self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f"), '__class__':'BaseModel'})
+        new_dict.update({'created_at': self.created_at.strftime
+                        ("%Y-%m-%dT%H:%M:%S.%f"), 'updated_at':
+                        self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f"),
+                        '__class__': 'BaseModel'})
         return new_dict
