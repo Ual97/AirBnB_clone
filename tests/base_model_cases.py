@@ -7,6 +7,7 @@ Testing cases in BaseModel class
 import unittest
 from ..models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
     """ Testing all methods from BaseModel """
 

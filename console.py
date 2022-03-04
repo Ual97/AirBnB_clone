@@ -2,20 +2,19 @@
 """Program that contains entry point of the command interpreter"""
 
 import cmd
-from logging import exception
 from models import storage
-from models.user import User
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter class"""
-    prompt = "(hbnb) "
+    prompt = "(hbnb)"
     classes = ["BaseModel", "User", "City", "Amenity",
                "Review", "State", "Place"]
 
@@ -97,7 +96,8 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
                 else:
                     # If instance is found, get its str repr.
-                    print(storage.all().get(f"{lines[0]}.{lines[1]}"))
+                    print(storage.all().get("{}.{}"
+                                            .format(lines[0], lines[1])))
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name
@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     # Instance exist, so we'll just pop it from __obj
                     # and save changes.
-                    storage.all().pop(f"{lines[0]}.{lines[1]}", None)
+                    storage.all().pop("{}.{}".format(lines[0], lines[1]), None)
                     storage.save()
 
     def do_all(self, line):
@@ -220,7 +220,7 @@ class HBNBCommand(cmd.Cmd):
                 possiblekey = ""
                 for key, values in storage.all().items():
                     try:
-                        possiblekey = f"{lines[0]}.{lines[1]}"
+                        possiblekey = "{}.{}".format(lines[0], lines[1])
                         setattr(storage.all().get(possiblekey),
                                 lines[2], lines[3])
                         storage.save()

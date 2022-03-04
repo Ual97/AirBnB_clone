@@ -2,15 +2,14 @@
 """
 Created class Base Model, attributes and methods.
 """
-
-
 import uuid
 import models
 from datetime import date, datetime
 
 
 class BaseModel:
-    """ Base Model
+    """
+    Base Model
 
         Att:
         id: randomly generated id, unique for each instance.
@@ -22,7 +21,6 @@ class BaseModel:
         __str___: a string representation of an instance.
         save: updates the updated_at attr with the current datetime
         to_dict: returns a dictionary containing all keys/values of __dict__.
-
     """
 
     def __init__(self, *args, **kwargs):
