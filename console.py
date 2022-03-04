@@ -18,12 +18,12 @@ class HBNBCommand(cmd.Cmd):
     classes = ["BaseModel", "User", "City", "Amenity",
                "Review", "State", "Place"]
 
-    def do_EOF(self, line):
+    def do_EOF(self):
         """handles EOF"""
         print()
         return True
 
-    def do_quit(self, line):
+    def do_quit(self):
         """handles quit"""
         print()
         return True
