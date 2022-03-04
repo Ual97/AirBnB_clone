@@ -14,7 +14,7 @@ from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter class"""
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     classes = ["BaseModel", "User", "City", "Amenity",
                "Review", "State", "Place"]
 
@@ -25,6 +25,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, line):
         """handles quit"""
+        print()
         return True
 
     def emptyline(self):
