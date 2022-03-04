@@ -2,9 +2,9 @@
 """
 Created class Base Model, attributes and methods.
 """
+from datetime import date, datetime
 import uuid
 import models
-from datetime import date, datetime
 
 
 class BaseModel:
