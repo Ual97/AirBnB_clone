@@ -14,7 +14,7 @@ from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter class"""
-    prompt = "(hbnb) "
+    prompt = "(hbnb)"
     classes = ["BaseModel", "User", "City", "Amenity",
                "Review", "State", "Place"]
 
