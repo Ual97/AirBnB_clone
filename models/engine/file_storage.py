@@ -62,6 +62,6 @@ class FileStorage:
                 attrs = json.load(file)
             for key, value in attrs.items():
                 # Instantiates the objects loaded from the JSON
-                self.__objects[key] = eval(str(key).split(".")[2](**value))()
+                self.__objects[key] = BaseModel(**value)
         except Exception:
             return

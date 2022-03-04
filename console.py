@@ -19,12 +19,12 @@ class HBNBCommand(cmd.Cmd):
                "Review", "State", "Place"]
 
     def do_EOF(self):
-        """handles EOF"""
+        """ End of file command """
         print()
         return True
 
     def do_quit(self):
-        """handles quit"""
+        """ Command to quit the CMD interface """
         print()
         return True
 
