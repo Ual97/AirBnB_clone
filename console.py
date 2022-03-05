@@ -2,6 +2,7 @@
 """Program that contains entry point of the command interpreter"""
 
 import cmd
+from datetime import datetime
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,7 +15,7 @@ from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter class"""
-    prompt = "(hbnb) "
+    prompt = '(hbnb) '
     classes = ["BaseModel", "User", "City", "Amenity",
                "Review", "State", "Place"]
 
@@ -22,21 +23,12 @@ class HBNBCommand(cmd.Cmd):
         """Creates new instance of BaseModel,
         saves it to JSON file and prints id"""
         lines = line.split()
-        isfound = 0
         if len(line) == 0:
             print("** class name missing **")
             return
-        for elements in HBNBCommand.classes:
-            # Checking if class given exists in list of classes
-            if elements == lines[0]:
-                # If found, break the loop
-                isfound = 0
-                break
-            else:
-                # Continue until finds or iterates it all
-                continue
-        if isfound == 1:
+        if not self.inclasslist(lines):
             print("** class doesn't exist **")
+            return
         else:
             # Class exists, it'll be created and saved
             # finally being printed
@@ -50,41 +42,28 @@ class HBNBCommand(cmd.Cmd):
         lines = line.split()
         if len(line) == 0:
             print("** class name missing **")
+            return
         else:
-            isfound = 1
-            for elements in HBNBCommand.classes:
-                if elements == lines[0]:
-                    isfound = 0
-                    break
-                else:
-                    continue
-            if isfound == 1:
+            if not self.inclasslist(lines):
                 print("** class doesn't exist **")
+                return
             if len(lines) == 1:
                 # No ID was passed
                 print("** instance id missing **")
+                return
             else:
-                id_list = []
-                aux_list = []
-                for key in storage.all().keys():
-                    # Gets all ID's stored in keys.
-                    aux_list = str(key).split(".")
-                    # Format [class, ID], getting ID from list.
-                    id_list.append(aux_list[1])
-                for possibleid in id_list:
-                    # Comparing ID given with ID's list.
-                    if lines[1] == possibleid:
-                        isfound = 0
-                        break
-                    else:
-                        isfound = 1
-                        continue
-                if isfound == 1:
+                if not self.idvalidator(lines):
                     print("** no instance found **")
+                    return
                 else:
                     # If instance is found, get its str repr.
-                    print(storage.all().get("{}.{}"
-                                            .format(lines[0], lines[1])))
+                    if storage.all().get("{}.{}"
+                                         .format(lines[0], lines[1])) is None:
+                        # However, if ID not correspond to the given class
+                        print("** no instance found **")
+                    else:
+                        print(storage.all().get("{}.{}"
+                                                .format(lines[0], lines[1])))
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name
@@ -92,33 +71,18 @@ class HBNBCommand(cmd.Cmd):
         lines = line.split()
         if len(line) == 0:
             print("** class name missing **")
+            return
         else:
-            isfound = 1
-            for elements in HBNBCommand.classes:
-                if elements == lines[0]:
-                    isfound = 0
-                    break
-                else:
-                    continue
-            if isfound == 1:
+            if not self.inclasslist(lines):
                 print("** class doesn't exist **")
+                return
             if len(lines) == 1:
                 print("** instance id missing **")
+                return
             else:
-                id_list = []
-                aux_list = []
-                for key in storage.all().keys():
-                    aux_list = str(key).split(".")
-                    id_list.append(aux_list[1])
-                for possibleid in id_list:
-                    if lines[1] == possibleid:
-                        isfound = 0
-                        break
-                    else:
-                        isfound = 1
-                        continue
-                if isfound == 1:
+                if not self.idvalidator(lines):
                     print("** no instance found **")
+                    return
                 else:
                     # Instance exist, so we'll just pop it from __obj
                     # and save changes.
@@ -130,22 +94,12 @@ class HBNBCommand(cmd.Cmd):
             all instances based or not on the class name.
         """
         lines = line.split()
-        isfound = 1
         aux_list = []
         split_list = []
-        print(lines[0])
-        if len(lines) != 0:
-            for elements in HBNBCommand.classes:
-                if elements == lines[0]:
-                    isfound = 1
-                    break
-                else:
-                    isfound = 0
-                    continue
-        if isfound == 0:
-            print("** class doesn't exist **")
-            return
-        if len(lines) == 1:
+        if lines:
+            if not self.inclasslist(lines):
+                print("** class doesn't exist **")
+                return
             # If name of class is given, print only str of
             # those class instances.
             for key, value in storage.all().items():
@@ -154,11 +108,14 @@ class HBNBCommand(cmd.Cmd):
                 if split_list[0] == lines[0]:
                     # When key is proper, gets str repr of value.
                     aux_list.append(str(value))
+                if len(aux_list) > 0:
+                    print(aux_list)
         else:
             # When no class name given, print all str repr
             for key, value in storage.all().items():
                 aux_list.append(str(value))
-        print(aux_list)
+            if len(aux_list) > 0:
+                print(aux_list)
 
     def do_update(self, line):
         """Updates an instance based on the class name
@@ -169,32 +126,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         else:
-            isfound = 1
-            for elements in HBNBCommand.classes:
-                if elements == lines[0]:
-                    isfound = 0
-                    break
-                else:
-                    continue
-            if isfound == 1:
+            if not self.inclasslist(lines):
                 print("** class doesn't exist **")
                 return
             if len(lines) == 1:
                 print("** instance id missing **")
                 return
-            id_list = []
-            aux_list = []
-            for key in storage.all().keys():
-                aux_list = str(key).split(".")
-                id_list.append(aux_list[1])
-            for possibleid in id_list:
-                if lines[1] == possibleid:
-                    isfound = 0
-                    break
-                else:
-                    isfound = 1
-                    continue
-            if isfound == 1:
+            if not self.idvalidator(lines):
                 print("** no instance found **")
                 return
             elif len(lines) == 2:
@@ -237,16 +175,58 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """ End of file command """
-        print()
+        print("")
         return True
 
     def do_quit(self, line):
         """ Command to quit the CMD interface """
+        print("")
         return True
 
     def emptyline(self):
         """if emptyline, do nothing"""
-        return
+        pass
+
+    def inclasslist(self, lines):
+        """ Auxiliar function to get if a given class
+        exists
+        """
+        for elements in HBNBCommand.classes:
+            # Checking if class given exists in list of classes
+            if elements == lines[0]:
+                # If found, break the loop
+                return True
+            else:
+                # Continue until finds or iterates it all
+                continue
+            return False
+
+    def idvalidator(self, lines):
+        """ Auxiliary function that helps to identify
+        if a given ID is saved into the objs
+        dictionary
+        """
+        id_list = []
+        aux_list = []
+        for key in storage.all().keys():
+            # Gets all ID's stored in keys.
+            aux_list = str(key).split(".")
+            # Format [class, ID], getting ID from list.
+            id_list.append(aux_list[1])
+            for possibleid in id_list:
+                # Comparing ID given with ID's list.
+                if lines[1] == possibleid:
+                    # Now compares ID with given class
+                    # to see if it corresponds
+                    if storage.all().get("{}.{}".
+                                         format(lines[0], lines[1])):
+                        return True
+                    else:
+                        # The ID is correct but is for a diff class
+                        return False
+                else:
+                    continue
+                return False
 
 
 if __name__ == "__main__":
