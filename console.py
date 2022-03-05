@@ -214,9 +214,16 @@ class HBNBCommand(cmd.Cmd):
                     except Exception:
                         continue
 
-    def count(self):
-        """ """
-        pass
+    def count(self, line):
+        """Shows count of instances sepcified """
+        if line in HBNBCommand.classes:
+            count = 0
+            for key, value in storage.all().items():
+                if line in key:
+                    count += 1
+            print(count)
+        else:
+            print("** class doesn't exist **")
 
     def default(self, line):
         """ Another way to identify commands """
