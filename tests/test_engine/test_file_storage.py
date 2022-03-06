@@ -18,10 +18,21 @@ from models.user import User
 class TestFileStorage(unittest.TestCase):
     """ Testing amenity class"""
 
+    def test_filedoc(self):
+        """ Tests documentation"""
+        self.assertIsNotNone(FileStorage.all.__doc__)
+        self.assertIsNotNone(FileStorage.new.__doc__)
+        self.assertIsNotNone(FileStorage.save.__doc__)
+        self.assertIsNotNone(FileStorage.reload.__doc__)
+
+    def test_storageinstance(self):
+        """ Checking storage being instance of FileStorage"""
+        self.assertEqual(isinstance(storage, FileStorage))
+
     def test_types(self):
         """ Checking types are ok"""
         classtest = FileStorage()
-        self.assertEqual(type(classtest), FileStorage)
+        self.assertEqual(classtest.__class__, FileStorage)
 
     def test_newinstances(self):
         """ Test class creation """
