@@ -175,7 +175,7 @@ class HBNBCommand(cmd.Cmd):
         if auxlist[1] in dictfun:
             # looks for the command in dictionary
             try:
-                # Executes command (no parameters needed) 
+                # Executes command (no parameters needed)
                 dictfun.get(auxlist[1])(auxlist[0])
             except Exception:
                 pass
