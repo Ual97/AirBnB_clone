@@ -50,27 +50,27 @@ class TestFileStorage(unittest.TestCase):
         storage.new(s)
         storage.new(u)
 
-        self.assertIn("{}.{}, {}"
+        self.assertIn("{}.{}"
                       .format(a.__class__.__name__,
-                              a.id, storage.all().keys()))
-        self.assertIn("{}.{}, {}"
+                              a.id), storage.all().keys())
+        self.assertIn("{}.{}"
                       .format(b.__class__.__name__,
-                              b.id, storage.all().keys()))
-        self.assertIn("{}.{}, {}"
+                              b.id), storage.all().keys())
+        self.assertIn("{}.{}"
                       .format(c.__class__.__name__,
-                              c.id, storage.all().keys()))
-        self.assertIn("{}.{}, {}"
+                              c.id), storage.all().keys())
+        self.assertIn("{}.{}"
                       .format(p.__class__.__name__,
-                              p.id, storage.all().keys()))
-        self.assertIn("{}.{}, {}"
+                              p.id), storage.all().keys())
+        self.assertIn("{}.{}"
                       .format(r.__class__.__name__,
-                              r.id, storage.all().keys()))
-        self.assertIn("{}.{}, {}"
+                              r.id), storage.all().keys())
+        self.assertIn("{}.{}"
                       .format(s.__class__.__name__,
-                              s.id, storage.all().keys()))
-        self.assertIn("{}.{}, {}"
+                              s.id), storage.all().keys())
+        self.assertIn("{}.{}"
                       .format(u.__class__.__name__,
-                              u.id, storage.all().keys()))
+                              u.id), storage.all().keys())
 
     def test_existmethods(self):
         """ Test that methods exist """
@@ -109,21 +109,17 @@ class TestFileStorage(unittest.TestCase):
         with open('file.json') as file:
             obj = file.read()
 
-            self.assertIn("{}.{}, {}"
-                          .format(a.__class__.__name__, a.id, obj))
-            self.assertIn("{}.{}, {}"
-                          .format(b.__class__.__name__, b.id, obj))
-            self.assertIn("{}.{}, {}"
-                          .format(c.__class__.__name__, c.id, obj))
-            self.assertIn("{}.{}, {}"
-                          .format(p.__class__.__name__, p.id, obj))
-            self.assertIn("{}.{}, {}"
-                          .format(r.__class__.__name__, r.id, obj))
-            self.assertIn("{}.{}, {}"
-                          .format(s.__class__.__name__, s.id, obj))
-            self.assertIn("{}.{}, {}"
-                          .format(u.__class__.__name__, u.id, obj))
-
-
-if __name__ == '__main__':
-    unittest.main()
+            self.assertIn("{}.{}"
+                          .format(a.__class__.__name__, a.id), obj)
+            self.assertIn("{}.{}"
+                          .format(b.__class__.__name__, b.id), obj)
+            self.assertIn("{}.{}"
+                          .format(c.__class__.__name__, c.id), obj)
+            self.assertIn("{}.{}"
+                          .format(p.__class__.__name__, p.id), obj)
+            self.assertIn("{}.{}"
+                          .format(r.__class__.__name__, r.id), obj)
+            self.assertIn("{}.{}"
+                          .format(s.__class__.__name__, s.id), obj)
+            self.assertIn("{}.{}"
+                          .format(u.__class__.__name__, u.id), obj)
