@@ -174,12 +174,12 @@ class HBNBCommand(cmd.Cmd):
             pass
 
     def do_EOF(self, line):
-        """ End of file command """
+        """ EOF command to exit the program"""
         print("")
         return True
 
     def do_quit(self, line):
-        """ Command to quit the CMD interface """
+        """ Quit command to exit the program """
         print("")
         return True
 
