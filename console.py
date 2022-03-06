@@ -41,6 +41,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an
            instance based on the class name and id"""
         lines = line.split()
+        print(lines)
         if len(line) == 0:
             print("** class name missing **")
             return
@@ -167,12 +168,35 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """ Another way to identify commands """
         auxlist = line.split(".")
-        dictfun = {"all()": self.do_all, "count()": self.count,
-                   "show()": self.do_show, "destroy()": self.do_destroy}
-        try:
-            dictfun.get(auxlist[1])(auxlist[0])
-        except Exception:
-            pass
+        dictfun = {"all()": self.do_all, "count()": self.count}
+        justid = {"show": self.do_show, "destroy": self.do_destroy}
+        moreparameters = {"update": self.do_update}
+
+        if auxlist[1] in dictfun:
+            try:
+                dictfun.get(auxlist[1])(auxlist[0])
+            except Exception:
+                pass
+        else:
+            # Getting parameters without parenthesis
+            auxlist2 = auxlist[1].split("(")
+            idsplit = auxlist2[1][:-1]
+            if auxlist2[0] in justid:
+                try:
+                    justid.get(auxlist2[0])(auxlist[0] +
+                                            ' ' + idsplit)
+                except Exception:
+                    pass
+            elif auxlist2[0] in moreparameters:
+                idsplit = idsplit.split(",")
+                parameter = auxlist[0] + ' ' + ''.join([str(item) for item
+                                                       in idsplit])
+                try:
+                    moreparameters.get(auxlist2[0])(auxlist[0] + ' ' +
+                                                    ''.join([str(item) for item
+                                                            in idsplit]))
+                except Exception:
+                    pass
 
     def do_EOF(self, line):
         """ EOF command to exit the program"""
