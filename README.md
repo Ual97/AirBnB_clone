@@ -1,5 +1,5 @@
 # AirBnB console
-![alt text](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOU5BHMTQX4%2F20220306%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220306T020214Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=9dc3639230603138f0935c4926a880d609fba7175e43068895a7f906892c9f32)
+![alt text](/media/hbnb_logo.png)
 
 ## Description
 
