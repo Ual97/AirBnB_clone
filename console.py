@@ -173,13 +173,16 @@ class HBNBCommand(cmd.Cmd):
         moreparameters = {"update": self.do_update}
 
         if auxlist[1] in dictfun:
+            # looks for the command in dictionary
             try:
+                # Executes command (no parameters needed) 
                 dictfun.get(auxlist[1])(auxlist[0])
             except Exception:
                 pass
         else:
             # Getting parameters without parenthesis
             auxlist2 = auxlist[1].split("(")
+            # Getting ID parameter for show and destroy
             idsplit = auxlist2[1][:-1]
             if auxlist2[0] in justid:
                 try:
@@ -188,9 +191,11 @@ class HBNBCommand(cmd.Cmd):
                 except Exception:
                     pass
             elif auxlist2[0] in moreparameters:
+                # Update has even moreparameters, needs
+                # to be handled differently
                 idsplit = idsplit.split(",")
-                parameter = auxlist[0] + ' ' + ''.join([str(item) for item
-                                                       in idsplit])
+                # Splits by comma, then sends params in a form
+                # that update function is made to receive
                 try:
                     moreparameters.get(auxlist2[0])(auxlist[0] + ' ' +
                                                     ''.join([str(item) for item
