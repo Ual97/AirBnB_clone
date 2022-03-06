@@ -3,7 +3,7 @@
 
 ## Description
 
-To summarize, this project is part of a series of projects dedicated to create a prototype version of the popular AirBnB service for learning purposes. Specifically, what recalls in this project is a console which allows the user to create, save, or load classes that already exist and were made for later usage. As said, this will be implemented later on next projects.
+To summarize, this project is part of a series of projects dedicated to create a prototype version of the popular AirBnB service for learning purposes. Specifically, what recalls in this project is a console which allows the user to create, save, or load classes that already exist and were made for later usage. This will be implemented later on next projects.
 
 ## Installation
 
